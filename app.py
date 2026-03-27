@@ -17,8 +17,8 @@ if uploaded_file:
     st.image(image, caption="Input Image", width=150)
 
     # Preprocess
-    img = image.resize((28, 28))
-    img = np.array(img) / 255.0
+    img = image.resize((8, 8))   # 🔥 FIX
+    img = np.array(img) / 16.0   # important for sklearn digits
     img = img.flatten().reshape(1, -1)
 
     prediction = model.predict(img)
