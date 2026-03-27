@@ -1,33 +1,28 @@
-from flask import Flask, request, jsonify
+import streamlit as st
 import numpy as np
 from PIL import Image
 from tensorflow.keras.models import load_model
-import os
 
-app = Flask(__name__)
-
-# FIX 1: load model safely
+# Load model safely
 model = load_model("models/cnn_model.h5", compile=False)
 
-@app.route("/")
-def home():
-    return "Digit Classifier API is running!"
+st.title("🔢 Handwritten Digit Classifier")
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    file = request.files["file"]
-    image = Image.open(file).convert('L')
+st.write("Upload a digit image (28x28 or similar)")
 
+uploaded_file = st.file_uploader("Upload Image", type=["png", "jpg", "jpeg"])
+
+if uploaded_file:
+    image = Image.open(uploaded_file).convert('L')
+    st.image(image, caption="Uploaded Image", width=150)
+
+    # Preprocess
     img = image.resize((28, 28))
     img = np.array(img) / 255.0
     img = img.reshape(1, 28, 28, 1)
 
+    # Predict
     prediction = model.predict(img)
-    digit = int(np.argmax(prediction))
+    digit = np.argmax(prediction)
 
-    return jsonify({"prediction": digit})
-
-# FIX 2: bind to Render port
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    st.success(f"Predicted Digit: {digit}")
