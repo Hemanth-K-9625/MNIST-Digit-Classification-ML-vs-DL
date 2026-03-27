@@ -2,10 +2,11 @@ from flask import Flask, request, jsonify
 import numpy as np
 from PIL import Image
 from tensorflow.keras.models import load_model
+import os
 
 app = Flask(__name__)
 
-# Load model
+# FIX 1: load model safely
 model = load_model("models/cnn_model.h5", compile=False)
 
 @app.route("/")
@@ -26,5 +27,7 @@ def predict():
 
     return jsonify({"prediction": digit})
 
+# FIX 2: bind to Render port
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
