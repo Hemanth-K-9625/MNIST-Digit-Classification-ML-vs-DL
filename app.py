@@ -6,7 +6,7 @@ from tensorflow.keras.models import load_model
 app = Flask(__name__)
 
 # Load model
-model = load_model("models/cnn_model.h5")
+model = load_model("models/cnn_model.h5", compile=False)
 
 @app.route("/")
 def home():
