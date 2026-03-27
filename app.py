@@ -1,28 +1,26 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-from tensorflow.keras.models import load_model
+import joblib
 
-# Load model safely
-model = load_model("models/cnn_model.h5", compile=False)
+# Load model
+model = joblib.load("models/logistic_model.pkl")
 
-st.title("🔢 Handwritten Digit Classifier")
+st.title("🔢 Digit Classifier")
 
-st.write("Upload a digit image (28x28 or similar)")
+st.write("Using Logistic Regression (lightweight deployment)")
 
 uploaded_file = st.file_uploader("Upload Image", type=["png", "jpg", "jpeg"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert('L')
-    st.image(image, caption="Uploaded Image", width=150)
+    st.image(image, caption="Input Image", width=150)
 
     # Preprocess
     img = image.resize((28, 28))
     img = np.array(img) / 255.0
-    img = img.reshape(1, 28, 28, 1)
+    img = img.flatten().reshape(1, -1)
 
-    # Predict
     prediction = model.predict(img)
-    digit = np.argmax(prediction)
 
-    st.success(f"Predicted Digit: {digit}")
+    st.success(f"Predicted Digit: {prediction[0]}")
