@@ -100,15 +100,16 @@ They are included in notebooks for experimentation and comparison.
 
 ## 🔮 Future Improvements
 
-* Deploy CNN using Docker or cloud GPU services
+* Deploy CNN using Render or cloud GPU services
 * Add digit drawing interface
+* Build app with digit drawing interface
 * Improve model robustness on real-world data
 
 ---
 
 ## 🧑‍💻 Author
 
-**Hemanth Kumar**
+**Hemanth Kumar K**
 
 ---
 
