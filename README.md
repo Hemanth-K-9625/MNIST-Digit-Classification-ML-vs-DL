@@ -110,7 +110,7 @@ They are included in notebooks for experimentation and comparison.
 ## 🧑‍💻 Author
 
 **Hemanth Kumar K**
-
+Data Scientist
 ---
 
 ## ⭐ If you like this project
